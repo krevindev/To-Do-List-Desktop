@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import { useContext } from 'react';
 import './App.css';
+import MainContent from './components/main_content/MainContent';
+import SideBar from './components/sidebar/SideBar';
+import { GlobalContext } from './hooks/useGlobalContext';
+import NewListModal from './components/new_list_modal/NewListModal';
 
 function App() {
+
+  const {isNLMVisible, setIsNLMVisible} = useContext(GlobalContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='app' className='h-screen flex items-stretch'>
+      <SideBar />
+      <MainContent />
+
+
+      {
+        isNLMVisible && <NewListModal setIsNLMVisible={setIsNLMVisible} />
+      }
     </div>
   );
 }
