@@ -73,7 +73,7 @@ const SideBar = () => {
                 <button
                     onClick={() => setIsNLMVisible(prev => !prev)}
                     className='w-full p-2 border text-white hover:text-black hover:bg-white duration-100 transition ease-in-out'>
-                    Add List
+                    Add Category
                 </button>
             </SideBarDiv>
 

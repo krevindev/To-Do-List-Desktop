@@ -75,7 +75,7 @@ const NewListModal = ({ setIsNLMVisible }) => {
                     <input
                         onChange={handleInputChange}
                         ref={newInputRef}
-                        className="bg-baseColor outline-none p-3 my-10 flex"
+                        className="bg-baseColor outline-none p-3 my-10 flex placeholder:text-gray-600"
                         placeholder="Category Name" />
 
                     <div className={`flex justify-around select-none bottom-0 }`}>
