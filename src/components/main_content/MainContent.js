@@ -6,11 +6,14 @@ const MainContent = () => {
 
     const { categories, activeCategoryID, isDark, updateCategs } = useContext(GlobalContext);
     const [activeCateg, setActiveCateg] = useState();
+    const [activeTasks, setActiveTasks] = useState();
 
     const updateTasks = () => {
         if (categories.length > 0) {
             const categ = Array.from(categories).filter(category => category._id === String(activeCategoryID))[0];
             setActiveCateg(categ);
+            setActiveTasks(categ ? categ.tasks: []);
+            updateCategs()
         }
     }
 
@@ -22,7 +25,7 @@ const MainContent = () => {
         addTask(activeCateg._id, activeCateg._rev, 'Task 123')
             .then(res => {
                 updateTasks();
-                updateCategs();
+                getDoc(activeCateg._id).then(doc => setActiveTasks(doc.tasks))
             })
             .catch(err => console.log(err));
     };
@@ -34,9 +37,9 @@ const MainContent = () => {
 
 
                 {
-                    activeCateg && <div className="w-full max-w-full h-fit max-h-full p-3 absolute left-0 top-0 flex flex-col box-border overflow-x-hidden overflow-y-auto">
+                    activeTasks && <div className="w-full max-w-full h-fit max-h-full p-3 absolute left-0 top-0 flex flex-col box-border overflow-x-hidden overflow-y-auto">
                         {
-                            activeCateg.tasks.reverse().map(task => (
+                            activeTasks.reverse().map(task => (
                                 <h4 className="flex flex-grow w-full h-10 bg-gray-900 m-1 p-10 justify-center items-center rounded-md">{task}</h4>
                             ))
                         }

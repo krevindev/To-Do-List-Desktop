@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import CircularProgress from '../circular_progress/CircularProgress';
-import { deleteDoc } from "../../db/pouchUtils";
+import { deleteDoc, getAllDocs } from "../../db/pouchUtils";
 import { GlobalContext } from "../../hooks/useGlobalContext";
 
 const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, progress }) => {
@@ -13,7 +13,10 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
     };
 
     const handleDelete = () => {
-        deleteDoc(String(id)).then(res => updateCategs()).catch(err => err);
+        deleteDoc(String(id)).then(res => {
+            updateCategs();
+            setActiveCategoryID('')
+        }).catch(err => err);
     }
 
     const themeProp = isActive ? 'bg-color2 border-opacity-100' : 'bg-baseColor border-opacity-0 border-baseColor';

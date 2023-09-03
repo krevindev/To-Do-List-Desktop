@@ -69,7 +69,7 @@ const SideBar = () => {
             </SideBarDiv>
 
             <SideBarDiv className=" h-1/4 min-h-fit flex-grow-0 select-none relative" >
-                {categories.length > 0 && <div className="absolute bottom-[100%] h-24 w-full bg-gradient-to-t from-baseColor to-[rgba(0,0,0,0)]" />}
+                {categories.length > 0 && <div className="absolute bottom-[100%] h-24 w-full bg-gradient-to-t from-baseColor to-[rgba(0,0,0,0)] pointer-events-none" />}
                 <button
                     onClick={() => setIsNLMVisible(prev => !prev)}
                     className='w-full p-2 border text-white hover:text-black hover:bg-white duration-100 transition ease-in-out'>
