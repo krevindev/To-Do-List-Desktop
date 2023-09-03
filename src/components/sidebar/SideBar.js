@@ -1,6 +1,5 @@
 import { useContext, useRef, useState } from 'react';
 import './SideBar.css';
-import NewListModal from '../new_list_modal/NewListModal';
 import TaskCateg from './TaskCateg';
 
 import { GlobalContext } from '../../hooks/useGlobalContext';
@@ -14,17 +13,14 @@ const SideBarDiv = ({ children, className }) => {
     )
 }
 
-
-
 const SideBar = () => {
 
     const {
         isDark,
         toggleDark,
         categories,
-        removeCategory,
-        setActiveCategoryIndex,
-        activeCategoryIndex,
+        setActiveCategoryID,
+        activeCategoryID,
         setIsNLMVisible
     } = useContext(GlobalContext);
 
@@ -33,32 +29,34 @@ const SideBar = () => {
 
             <SideBarDiv className="flex-grow-0 flex items-center justify-between p-6">
                 <img className="cursor-pointer" src="/images/icons/menu-icon.svg" />
-                <img className="cursor-pointer" src="/images/icons/light-theme-icon.svg" onClick={toggleDark} />
+                <img className="cursor-pointer w-7" src={`/images/icons/${isDark ? 'light' : 'dark'}-theme-icon.svg`} onClick={toggleDark} />
             </SideBarDiv>
             <SideBarDiv className="h-1/4 flex-grow-[.1] p-3">
                 <input className="rounded-md bg-color2 outline-none text-white p-2" type='Search' placeholder="Search" />
             </SideBarDiv>
 
             <SideBarDiv className="flex-grow-[.2] flex flex-col justify-end p-1 items-stretch border-b-[.1px] border-color2">
-                {
-                    categories.filter(categ => categ.isToday).map(c => <TaskCateg name="Today" isToday={true} />)
-                }
+
             </SideBarDiv>
 
             <SideBarDiv className="flex-grow flex-col justify-start items-start overflow-y-auto overflow-x-hidden relative z-0">
-                <div className="w-full flex flex-col justify-start absolute top-0 p-1 z-30">
-                    {
-                        categories.map((task, index) => (
-                            <TaskCateg
-                                name={task.name}
-                                index={index}
-                                removeCategory={removeCategory}
-                                setActiveCategoryIndex={setActiveCategoryIndex}
-                                isActive={index === activeCategoryIndex}
-                            />
-                        ))
-                    }
-                </div>
+                {
+                    categories.length > 0 ?
+                        <div className="w-full flex flex-col-reverse justify-start absolute top-0 p-1 z-30">
+                            {
+                                categories.map((task, index) => (
+                                    <TaskCateg
+                                        key={task._id}
+                                        progress={task.progress}
+                                        name={task.name}
+                                        id={task._id}
+                                        setActiveCategoryID={setActiveCategoryID}
+                                        isActive={task._id === String(activeCategoryID)}
+                                    />))
+                            }
+                        </div>
+                        : <div className="bg-red-400 h-full w-full"><h4>Empty</h4></div>
+                }
             </SideBarDiv>
 
             <SideBarDiv className=" h-1/4 min-h-fit flex-grow-0" >

@@ -1,26 +1,29 @@
 import { useState } from "react";
+import CircularProgress from '../circular_progress/CircularProgress';
 
-const TaskCateg = ({ name, index, isToday, removeCategory, isActive, setActiveCategoryIndex }) => {
+const TaskCateg = ({ id, key, name, isActive, setActiveCategoryID, progress }) => {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
 
     const handleClick = (e) => {
-        setActiveCategoryIndex(index);
+        setActiveCategoryID(id);
     };
 
     const themeProp = isActive ? 'bg-color2 border-opacity-100' : 'bg-baseColor border-opacity-0 border-baseColor';
 
     return (
         <div
+            key={key}
             className={`TaskCateg h-fit m-1 p-3 flex flex-col justify-stretch hover:bg-color2 box-border cursor-pointer border rounded-md relative ${themeProp}`}
             onContextMenu={() => setIsMenuVisible(prev => !prev)}
             onClick={handleClick}
         >
             <div className="w-full flex items-center">
-                <img
+                <CircularProgress percentage={progress} className="w-5 mr-3" size={7} strokeWidth={2} />
+                {/* <img
                     src={`/images/icons/${isToday ? 'today-icon.svg' : 'categ-icon.svg'}`}
                     className="mr-5"
-                />
+                /> */}
                 <div className="flex justify-between items-center w-full">
                     <h1 className='text-xs'>{name}</h1>
                     {
@@ -34,7 +37,7 @@ const TaskCateg = ({ name, index, isToday, removeCategory, isActive, setActiveCa
                     <div className="top-[50%] left-[50%] h-10 my-2 bg-color2 z-20 flex items-center justify-around p-3 cursor-default">
                         <img className="h-full cursor-pointer" src="/images/icons/complete-icon.svg" />
                         <img className="h-full cursor-pointer" src="/images/icons/edit-icon.svg" />
-                        <img className="h-full cursor-pointer" src="/images/icons/delete-icon.svg" onClick={() => removeCategory(index)} />
+                        <img className="h-full cursor-pointer" src="/images/icons/delete-icon.svg" />
                     </div>
                 )
             }
