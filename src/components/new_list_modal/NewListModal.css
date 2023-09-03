@@ -1,0 +1,10 @@
+.confirm-btn {
+    transition: all .5s ease-out;
+    @apply  p-3 items-center cursor-pointer filter rounded-md
+}
+.confirm-btn:hover {
+    background: #3f3f3f;
+}
+.invalid-btn {
+    background: green;
+}

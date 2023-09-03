@@ -12,6 +12,36 @@ export const addDoc = (newDoc) => {
     })
 };
 
+export const addTask = (_id, _rev, newTask) => {
+    return new Promise((resolve, reject) => {
+        db.get(_id, (err, doc) => {
+            if (err) return reject(err);
+
+            doc.tasks.push(newTask);
+
+            db.put(doc, (err, res) => {
+                if (err) return reject(err);
+
+                return resolve('Successfully Added');
+            });
+        });
+    });
+}
+
+export const deleteDoc = (targetID) => {
+    return new Promise((resolve, reject) => {
+        db.get(targetID, (err, doc) => {
+            if (err) return reject(err);
+
+            db.remove(targetID, doc._rev, (err) => {
+                if (err) return reject(err);
+
+                return resolve('Document Deleted!');
+            });
+        });
+    });
+};
+
 export const addBulk = async (newDocs) => {
     return new Promise(async (resolve, reject) => {
         db.bulkDocs(newDocs, (err, res) => {
@@ -24,8 +54,8 @@ export const addBulk = async (newDocs) => {
 
 export const getDoc = (targetID) => {
     return new Promise((resolve, reject) => {
-        db.get(targetID, (err, doc ) => {
-            if(err) return reject(err);
+        db.get(targetID, (err, doc) => {
+            if (err) return reject(err);
 
             return resolve(doc);
         })
@@ -40,4 +70,9 @@ export const getAllDocs = () => {
             return resolve(doc.rows.map(row => row.doc));
         });
     })
+}
+export const destroyDB = () => {
+    return new Promise((resolve, reject) => {
+        db.destroy();
+    });
 }

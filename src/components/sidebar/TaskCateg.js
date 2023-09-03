@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CircularProgress from '../circular_progress/CircularProgress';
+import { deleteDoc } from "../../db/pouchUtils";
+import { GlobalContext } from "../../hooks/useGlobalContext";
 
-const TaskCateg = ({ id, key, name, isActive, setActiveCategoryID, progress }) => {
+const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, progress }) => {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const { updateCategs } = useContext(GlobalContext);
 
     const handleClick = (e) => {
         setActiveCategoryID(id);
     };
+
+    const handleDelete = () => {
+        deleteDoc(String(id)).then(res => updateCategs()).catch(err => err);
+    }
 
     const themeProp = isActive ? 'bg-color2 border-opacity-100' : 'bg-baseColor border-opacity-0 border-baseColor';
 
@@ -25,7 +32,10 @@ const TaskCateg = ({ id, key, name, isActive, setActiveCategoryID, progress }) =
                     className="mr-5"
                 /> */}
                 <div className="flex justify-between items-center w-full">
-                    <h1 className='text-xs'>{name}</h1>
+                    <div className="flex flex-col justify-center">
+                        <h1 className='text-sm'>{name}</h1>
+                        <p className=" text-[10px] text-gray-400 m-1">{tasksLeft} Tasks Left</p>
+                    </div>
                     {
                         !isMenuVisible && <span onClick={() => setIsMenuVisible(true)}>...</span>
                     }
@@ -37,7 +47,7 @@ const TaskCateg = ({ id, key, name, isActive, setActiveCategoryID, progress }) =
                     <div className="top-[50%] left-[50%] h-10 my-2 bg-color2 z-20 flex items-center justify-around p-3 cursor-default">
                         <img className="h-full cursor-pointer" src="/images/icons/complete-icon.svg" />
                         <img className="h-full cursor-pointer" src="/images/icons/edit-icon.svg" />
-                        <img className="h-full cursor-pointer" src="/images/icons/delete-icon.svg" />
+                        <img onClick={handleDelete} className="h-full cursor-pointer hover:saturate-[300%]" src="/images/icons/delete-icon.svg" />
                     </div>
                 )
             }

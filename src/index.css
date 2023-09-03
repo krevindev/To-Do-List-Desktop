@@ -28,6 +28,10 @@ code {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+img {
+  user-select: none;
+}
+
 .absolute-center {
   top: 50%;
   left: 50%;
