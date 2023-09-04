@@ -4,7 +4,7 @@ import { addDoc, getAllDocs } from "../../../db/pouchUtils";
 import { GlobalContext } from "../../../hooks/useGlobalContext";
 import moment from "moment/moment";
 
-const NewListModal = ({ setIsNLMVisible }) => {
+const NewListModal = () => {
 
     const newInputRef = useRef(null);
     const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
@@ -12,11 +12,11 @@ const NewListModal = ({ setIsNLMVisible }) => {
     const [isNotifVisible, setIsNotifVisible] = useState(false);
     const [notifState, setNotifState] = useState();
 
-    const { updateCategs, setActiveCategoryID } = useContext(GlobalContext);
+    const { updateCategs, setActiveCategoryID, setIsModalVisible } = useContext(GlobalContext);
 
     const handleClickOutside = e => {
         if (e.target.id == 'new-list-modal-container') {
-            setIsNLMVisible(false);
+            setIsModalVisible(false);
         }
     }
 
@@ -42,7 +42,7 @@ const NewListModal = ({ setIsNLMVisible }) => {
                     // delay for closing the NLM to show the success or error message
                     setTimeout(() => {
                         getAllDocs().then(doc => setActiveCategoryID(doc.length - 1));
-                        setIsNLMVisible(false);
+                        setIsModalVisible(false);
                         updateCategs();
                     }, 2000);
                 }, 600);
@@ -69,18 +69,13 @@ const NewListModal = ({ setIsNLMVisible }) => {
     const handleCancel = e => {
         e.preventDefault();
 
-        setIsNLMVisible(false);
+        setIsModalVisible(false);
     };
 
     const handleInputChange = e => {
         setIsConfirmationVisible(e.target.value.length > 0 ? true : false)
     }
     return (
-        <div
-            onClick={handleClickOutside}
-            id="new-list-modal-container"
-            className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-60 flex justify-center items-center"
-        >
             <div className="bg-color2 rounded-lg min-w-[400px] h-fit p-3 flex flex-col relative">
 
                 <form onSubmit={handleSubmit} className="flex flex-grow flex-col w-full items-stretch justify-around box-border p-4 relative">
@@ -118,8 +113,6 @@ const NewListModal = ({ setIsNLMVisible }) => {
                 }
 
             </div>
-
-        </div>
     );
 }
 

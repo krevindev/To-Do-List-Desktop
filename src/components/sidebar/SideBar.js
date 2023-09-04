@@ -1,8 +1,9 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './SideBar.css';
 import TaskCateg from './TaskCateg';
 
 import { GlobalContext } from '../../hooks/useGlobalContext';
+import ProfileMenu from '../profile_menu/ProfileMenu';
 
 const SideBarDiv = ({ children, className }) => {
 
@@ -21,15 +22,27 @@ const SideBar = () => {
         categories,
         setActiveCategoryID,
         activeCategoryID,
-        setIsNLMVisible
+        displayModal
     } = useContext(GlobalContext);
 
+    const [isProfileMenu, setIsProfileMenu] = useState(false);
+
     return (
-        <aside className={`hidden sm:flex flex-col w-60 max-w-[60] max-h-screen items-stretch justify-stretch ${isDark ? 'bg-baseColor' : 'bg-slate-300'} box-border`}>
+        <aside
+            className={`hidden sm:flex flex-col w-60 max-w-[60] max-h-screen items-stretch justify-stretch ${isDark ? 'bg-baseColor' : 'bg-slate-300'} box-border`}
+        >
 
             <SideBarDiv className="flex-grow-0 flex items-center justify-between p-6 select-none">
-                <img className="cursor-pointer" src="/images/icons/menu-icon.svg" />
-                <img className="cursor-pointer w-7" src={`/images/icons/${isDark ? 'light' : 'dark'}-theme-icon.svg`} onClick={toggleDark} />
+                <div className="relative">
+                    <img className="cursor-pointer hover:brightness-150" src="/images/icons/menu-icon.svg" onClick={() => setIsProfileMenu(prev => !prev)} />
+                    {
+                        isProfileMenu && <ProfileMenu
+                            setIsProfileMenu={setIsProfileMenu} />
+                    }
+                </div>
+                <div>
+                    <img className="cursor-pointer w-7 hover:brightness-150" src={`/images/icons/${isDark ? 'light' : 'dark'}-theme-icon.svg`} onClick={toggleDark} />
+                </div>
             </SideBarDiv>
             <SideBarDiv className="h-1/4 flex-grow-[.1] p-3">
                 <input className="rounded-md bg-color2 outline-none text-white p-2" type='Search' placeholder="Search" />
@@ -71,12 +84,11 @@ const SideBar = () => {
             <SideBarDiv className=" h-1/4 min-h-fit flex-grow-0 select-none relative" >
                 {categories.length > 0 && <div className="absolute bottom-[100%] h-24 w-full bg-gradient-to-t from-baseColor to-[rgba(0,0,0,0)] pointer-events-none" />}
                 <button
-                    onClick={() => setIsNLMVisible(prev => !prev)}
+                    onClick={() => displayModal('new-categ-modal')}
                     className='w-full p-2 border text-white hover:text-black hover:bg-white duration-100 transition ease-in-out'>
                     Add Category
                 </button>
             </SideBarDiv>
-
 
         </aside>
     );

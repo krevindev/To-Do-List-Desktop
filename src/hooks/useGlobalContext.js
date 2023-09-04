@@ -8,7 +8,8 @@ export const GlobalContextProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(true);
     const [categories, setCategories] = useState([]);
     const [activeCategoryID, setActiveCategoryID] = useState(null);
-    const [isNLMVisible, setIsNLMVisible] = useState(false); // NLM = New List Modal
+    const [isModalVisible, setIsModalVisible] = useState(false); // NLM = New List Modal
+    const [activeModal, setActiveModal] = useState('');
 
     const toggleDark = () => {
         setIsDark(prev => !prev);
@@ -16,9 +17,15 @@ export const GlobalContextProvider = ({ children }) => {
 
     const updateCategs = () => {
         getAllDocs().then(res => {
+            console.log(res);
             setCategories(res.sort((a, b) => moment(a.dateTimeCreated) - moment(b.dateTimeCreated)));
         });
     };
+
+    const displayModal = (modalType) => {
+        setActiveModal(modalType);
+        setIsModalVisible(true);
+    }
 
     useEffect(() => {
         updateCategs();
@@ -30,11 +37,14 @@ export const GlobalContextProvider = ({ children }) => {
                 isDark,
                 categories,
                 activeCategoryID,
-                isNLMVisible,
+                isModalVisible,
+                activeModal,
                 toggleDark,
                 setActiveCategoryID,
-                setIsNLMVisible,
-                updateCategs
+                setIsModalVisible,
+                updateCategs,
+                setActiveModal,
+                displayModal
             }}>
             {children}
         </GlobalContext.Provider>

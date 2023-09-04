@@ -6,7 +6,7 @@ import { GlobalContext } from "../../hooks/useGlobalContext";
 const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, progress }) => {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
-    const { updateCategs } = useContext(GlobalContext);
+    const { updateCategs, setIsModalVisible, displayModal } = useContext(GlobalContext);
     const [isEditable, setIsEditable] = useState(false);
 
     const handleClick = (e) => {
@@ -38,7 +38,7 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                 <div className="flex justify-between items-center w-full">
                     <div className="flex flex-col justify-center">
                         {/* <h1 className='text-sm'>{name}</h1> */}
-                        <input className="w-full bg-[rgba(0,0,0,0)] outline-none placeholder:text-white" placeholder={name}></input>
+                        <input className="w-full bg-[rgba(0,0,0,0)] outline-none placeholder:text-white cursor-pointer" placeholder={name} readOnly></input>
                         <p className=" text-[10px] text-gray-400 m-1">{tasksLeft} Tasks Left</p>
                     </div>
                     {
@@ -52,12 +52,13 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                     <div className="top-[50%] left-[50%] h-10 my-2 bg-color2 z-20 flex items-center justify-around p-3 cursor-default">
                         <img title="Mark as Complete" className="h-full cursor-pointer" src="/images/icons/complete-icon.svg" />
                         <img title="Rename" className="h-full cursor-pointer" src="/images/icons/edit-icon.svg" />
-                        <img title="Delete Category" onClick={handleDelete} className="h-full cursor-pointer hover:saturate-[300%]" src="/images/icons/delete-icon.svg" />
+                        <img title="Delete Category" onClick={() => displayModal('confirm-delete-modal')} className="h-full cursor-pointer hover:saturate-[300%]" src="/images/icons/delete-icon.svg" />
                     </div>
                 )
             }
         </div>
     )
 };
+
 
 export default TaskCateg;

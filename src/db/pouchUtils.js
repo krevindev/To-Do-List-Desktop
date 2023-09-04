@@ -1,12 +1,12 @@
 import PouchDB from 'pouchdb';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const db = new PouchDB('taskDB');
 
 // const cdb = new PouchDB('categoriesDB');
 
-// export const addDoc = (newDoc) => {
+//  const addDoc = (newDoc) => {
 //     return new Promise(async (resolve, reject) => {
 //         db.put({ ...newDoc, _id: '' + (await db.allDocs()).total_rows }, (err, res) => {
 //             if (err) return reject(err);
@@ -16,7 +16,7 @@ const db = new PouchDB('taskDB');
 //     })
 // };
 
-export const addDoc = (newDoc) => {
+const addDoc = (newDoc) => {
     return new Promise(async (resolve, reject) => {
         try {
             // Generate a unique ID using uuid
@@ -32,7 +32,7 @@ export const addDoc = (newDoc) => {
     });
 };
 
-export const addTask = (_id, _rev, newTask) => {
+const addTask = (_id, _rev, newTask) => {
     return new Promise((resolve, reject) => {
         db.get(_id, (err, doc) => {
             if (err) return reject(err);
@@ -48,7 +48,7 @@ export const addTask = (_id, _rev, newTask) => {
     });
 }
 
-export const deleteDoc = (targetID) => {
+const deleteDoc = (targetID) => {
     return new Promise((resolve, reject) => {
         db.get(targetID, (err, doc) => {
             if (err) return reject(err);
@@ -62,7 +62,7 @@ export const deleteDoc = (targetID) => {
     });
 };
 
-export const addBulk = async (newDocs) => {
+const addBulk = async (newDocs) => {
     return new Promise(async (resolve, reject) => {
         db.bulkDocs(newDocs, (err, res) => {
             if (err) return reject(err);
@@ -72,7 +72,7 @@ export const addBulk = async (newDocs) => {
     })
 };
 
-export const getDoc = (targetID) => {
+const getDoc = (targetID) => {
     return new Promise((resolve, reject) => {
         db.get(targetID, (err, doc) => {
             if (err) return reject(err);
@@ -82,7 +82,7 @@ export const getDoc = (targetID) => {
     });
 };
 
-export const getAllDocs = () => {
+const getAllDocs = () => {
     return new Promise((resolve, reject) => {
         db.allDocs({ include_docs: true }, (err, doc) => {
             if (err) return reject(err);
@@ -90,9 +90,30 @@ export const getAllDocs = () => {
             return resolve(doc.rows.map(row => row.doc));
         });
     })
-}
-export const destroyDB = () => {
+};
+const destroyDB = () => {
     return new Promise((resolve, reject) => {
-        db.destroy();
+        try {
+            db.destroy((err, res) => {
+                if (err) return reject(err);
+
+                return resolve(res);
+            });
+        }
+        catch (err) {
+            return reject(err);
+        }
     });
-}
+};
+
+
+
+export {
+    addDoc,
+    addTask,
+    deleteDoc,
+    addBulk,
+    getDoc,
+    getAllDocs,
+    destroyDB,
+};
