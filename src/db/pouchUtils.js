@@ -1,15 +1,35 @@
 import PouchDB from 'pouchdb';
+import {v4 as uuidv4} from 'uuid';
+
+
 const db = new PouchDB('taskDB');
+
 // const cdb = new PouchDB('categoriesDB');
+
+// export const addDoc = (newDoc) => {
+//     return new Promise(async (resolve, reject) => {
+//         db.put({ ...newDoc, _id: '' + (await db.allDocs()).total_rows }, (err, res) => {
+//             if (err) return reject(err);
+
+//             return resolve('Success!');
+//         });
+//     })
+// };
 
 export const addDoc = (newDoc) => {
     return new Promise(async (resolve, reject) => {
-        db.put({ ...newDoc, _id: '' + (await db.allDocs()).total_rows }, (err, res) => {
-            if (err) return reject(err);
+        try {
+            // Generate a unique ID using uuid
+            newDoc._id = uuidv4();
 
-            return resolve('Success!');
-        });
-    })
+            // Insert the document into the database
+            const response = await db.put(newDoc);
+
+            resolve(response);
+        } catch (err) {
+            reject(err);
+        }
+    });
 };
 
 export const addTask = (_id, _rev, newTask) => {

@@ -21,9 +21,6 @@ export const GlobalContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-    }, [activeCategoryID]);
-
-    useEffect(() => {
         updateCategs();
     }, []);
 

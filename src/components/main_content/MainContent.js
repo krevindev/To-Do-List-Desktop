@@ -50,7 +50,7 @@ const MainContent = () => {
             {
                 activeCateg && <div
                     onClick={handleAddTask}
-                    className="absolute bottom-10 right-10 bg-green-500 hover:bg-green-600 rounded-full w-16 h-16 flex justify-center items-center cursor-pointer"
+                    className="absolute bottom-10 right-10 bg-green-500 hover:bg-green-600 rounded-full w-16 h-16 flex justify-center items-center cursor-pointer select-none"
                 >
                     <span className="text-4xl -translate-y-1">+</span>
                 </div>

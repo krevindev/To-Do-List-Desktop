@@ -1,7 +1,7 @@
 import './NewListModal.css';
 import { useContext, useEffect, useRef, useState } from "react";
-import { addDoc, getAllDocs } from "../../db/pouchUtils";
-import { GlobalContext } from "../../hooks/useGlobalContext";
+import { addDoc, getAllDocs } from "../../../db/pouchUtils";
+import { GlobalContext } from "../../../hooks/useGlobalContext";
 import moment from "moment/moment";
 
 const NewListModal = ({ setIsNLMVisible }) => {
@@ -10,6 +10,7 @@ const NewListModal = ({ setIsNLMVisible }) => {
     const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [isNotifVisible, setIsNotifVisible] = useState(false);
+    const [notifState, setNotifState] = useState();
 
     const { updateCategs, setActiveCategoryID } = useContext(GlobalContext);
 
@@ -28,20 +29,33 @@ const NewListModal = ({ setIsNLMVisible }) => {
                 dateTimeCreated: moment().format('YYYY-MM-DD HH-mm-ss'),
             }
 
-            setIsSaving(true);
+            setIsSaving(true);  // play the loading gif
+
+            // add the new category to database
             addDoc(newValue).then(res => {
+
+                // adds delay to show the loading gif
                 setTimeout(() => {
                     setIsNotifVisible(true);
                     setIsSaving(false);
+
+                    // delay for closing the NLM to show the success or error message
                     setTimeout(() => {
+                        getAllDocs().then(doc => setActiveCategoryID(doc.length - 1));
                         setIsNLMVisible(false);
                         updateCategs();
+                    }, 2000);
+                }, 600);
+            }).catch(err => {
+                console.log(err);
+                setNotifState('error');
+                setIsNotifVisible(true);
+                setIsSaving(false);
 
-                        getAllDocs().then(doc => setActiveCategoryID(doc.length - 1));
-
-                    }, 1000);
+                setTimeout(() => {
+                    setIsNotifVisible(false);
                 }, 1000);
-            }).catch(err => console.log(err));
+            });
         }
 
     };
@@ -79,7 +93,7 @@ const NewListModal = ({ setIsNLMVisible }) => {
                         placeholder="Category Name" />
 
                     <div className={`flex justify-around select-none bottom-0 }`}>
-                        <div className={`confirm-btn ${isConfirmationVisible ? 'flex' : 'hidden'}`} >
+                        <div className={`confirm-btn ${isConfirmationVisible ? 'flex' : 'hidden'}`} onClick={handleSubmit}>
                             {
                                 isSaving ? <img className="w-5" src="/images/gif/loading-gif.gif" /> :
                                     <img className=" h-[70%]" src="/images/icons/check-icon.svg" />
@@ -95,9 +109,9 @@ const NewListModal = ({ setIsNLMVisible }) => {
                 {
                     isNotifVisible && <div id="success-new-categ"
                         className="absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,.9)] flex items-center justify-center">
-                        <div className="w-[80%] h-fit min-h-[50%] bg-color2 rounded-md flex flex-col justify-center items-center p-3">
-                            <img src="/images/gif/done.gif" />
-                            <h3 className="text-xl font-bold">Saved </h3>
+                        <div className="w-[80%] h-fit min-h-[50%] bg-color2 rounded-md flex flex-col justify-center items-center p-3 border">
+                            <img src={`/images/gif/${notifState=='error'?'error':'done'}.gif`} />
+                            <h3 className="text-xl font-bold">{notifState=='error'?'Error Saving':'Saved'}</h3>
                             <h1 className="text-xl font-bold">'{newInputRef.current.value}'</h1>
                         </div>
                     </div>
