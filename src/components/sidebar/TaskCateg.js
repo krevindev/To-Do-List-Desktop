@@ -3,6 +3,7 @@ import CircularProgress from '../circular_progress/CircularProgress';
 import { deleteDoc, getAllDocs } from "../../db/pouchUtils";
 import { GlobalContext } from "../../hooks/useGlobalContext";
 
+
 const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, progress }) => {
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);

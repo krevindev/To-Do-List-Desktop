@@ -5,6 +5,9 @@ import TaskCateg from './TaskCateg';
 import { GlobalContext } from '../../hooks/useGlobalContext';
 import ProfileMenu from '../profile_menu/ProfileMenu';
 
+import UseAnimations from "react-useanimations";
+import menu3 from 'react-useanimations/lib/menu3';
+
 const SideBarDiv = ({ children, className }) => {
 
     return (
@@ -34,8 +37,19 @@ const SideBar = () => {
 
             <SideBarDiv className="flex-grow-0 flex items-center justify-between p-6 select-none">
                 <div className="relative">
-                    <img className="cursor-pointer hover:brightness-150" src="/images/icons/menu-icon.svg" onClick={() => setIsProfileMenu(prev => !prev)} />
-                    {
+                    {/* <img className="cursor-pointer hover:brightness-150" src="/images/icons/menu-icon.svg" onClick={() => setIsProfileMenu(prev => !prev)} /> */}
+                    <UseAnimations
+                        key={isProfileMenu}
+                        className="cursor-pointer"
+                        size={35}
+                        speed={1000}
+                        animation={menu3}
+                        strokeColor="gray"
+                        autoplay={isProfileMenu}
+                        reversed={!isProfileMenu}
+                        onClick={() => setIsProfileMenu(prev => !prev)}
+                        wrapperStyle={{ marginTop: '5px' }}
+                    />                 {
                         isProfileMenu && <ProfileMenu
                             setIsProfileMenu={setIsProfileMenu} />
                     }
