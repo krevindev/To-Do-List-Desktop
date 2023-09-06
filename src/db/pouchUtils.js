@@ -1,4 +1,5 @@
 import PouchDB from 'pouchdb';
+import { async } from 'q';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -106,6 +107,23 @@ const destroyDB = () => {
     });
 };
 
+const clearData = async () => {
+    try {
+        const allDocs = await db.allDocs({ include_docs: true });
+
+        const promises = allDocs.rows.map(async (row) => {
+            try {
+                await db.remove(row.doc);
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        await Promise.all(promises);
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 
 export {
@@ -116,4 +134,5 @@ export {
     getDoc,
     getAllDocs,
     destroyDB,
+    clearData
 };

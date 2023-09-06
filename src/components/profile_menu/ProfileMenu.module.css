@@ -1,0 +1,9 @@
+.profile-menu-item {
+    @apply w-fit hover:bg-[--baseColor] min-w-full p-5 text-sm flex items-center justify-center box-border relative
+}
+.profile-menu-item span {
+    @apply flex justify-self-center
+}
+.profile-menu-item img {
+    @apply w-7 h-7 mr-1 justify-self-start absolute left-5;
+}

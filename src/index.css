@@ -18,6 +18,9 @@ code {
   outline: none;
   border: none;
   color: white;
+
+  --baseColor: #1D1D1D;
+  --color2: #282828;
 }
 
 *::selection {

@@ -6,30 +6,35 @@ import { GlobalContext } from './hooks/useGlobalContext';
 import NewListModal from './components/modals/new_list_modal/NewListModal';
 import ModalContainer from './components/modals/ModalContainer';
 import ConfirmDeleteModal from './components/modals/confirm_delete_modal/ConfirmDeleteModal';
-import DestroyDBButton from './components/dev/DestroyDBButton';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SettingsContent from './components/settings_content/SettingsContent';
 
 function App() {
 
   const { isModalVisible, setIsModalVisible, activeModal } = useContext(GlobalContext);
 
   return (
-    <div id='app' className='h-screen flex items-stretch'>
-      <SideBar />
-      <MainContent />
-      {
-        isModalVisible && <ModalContainer setIsModalVisible={setIsModalVisible}>
-          {
-            activeModal == 'new-categ-modal' ? <NewListModal /> : activeModal == 'confirm-delete-modal' ? <ConfirmDeleteModal /> :
-              <></>
-          }
-        </ModalContainer>
-      }
+    <Router>
+      <div id='app' className='h-screen flex items-stretch'>
+        <SideBar />
+        <Routes>
+          <Route path='/' element={<MainContent />} />
+          <Route path='/settings' element={<SettingsContent />} />
+        </Routes>
+        {
+          isModalVisible && <ModalContainer setIsModalVisible={setIsModalVisible}>
+            {
+              activeModal == 'new-categ-modal' ? <NewListModal /> : activeModal == 'confirm-delete-modal' ? <ConfirmDeleteModal /> :
+                <></>
+            }
+          </ModalContainer>
+        }
 
-      {
-        // isModalVisible && <NewListModal setIsModalVisible={setIsModalVisible} />
-      }
-      <DestroyDBButton/>
-    </div>
+        {
+          // isModalVisible && <NewListModal setIsModalVisible={setIsModalVisible} />
+        }
+      </div>
+    </Router>
   );
 }
 

@@ -39,6 +39,7 @@ const SideBar = () => {
                 <div className="relative">
                     {/* <img className="cursor-pointer hover:brightness-150" src="/images/icons/menu-icon.svg" onClick={() => setIsProfileMenu(prev => !prev)} /> */}
                     <UseAnimations
+                        reverse
                         key={isProfileMenu}
                         className="cursor-pointer"
                         size={35}
@@ -46,7 +47,6 @@ const SideBar = () => {
                         animation={menu3}
                         strokeColor="gray"
                         autoplay={isProfileMenu}
-                        reversed={!isProfileMenu}
                         onClick={() => setIsProfileMenu(prev => !prev)}
                         wrapperStyle={{ marginTop: '5px' }}
                     />                 {
@@ -55,7 +55,7 @@ const SideBar = () => {
                     }
                 </div>
                 <div>
-                    <img className="cursor-pointer w-7 hover:brightness-150" src={`/images/icons/${isDark ? 'light' : 'dark'}-theme-icon.svg`} onClick={toggleDark} />
+                    <img className=" w-7  cursor-not-allowed" src={`/images/icons/${isDark ? 'light' : 'dark'}-theme-icon.svg`} />
                 </div>
             </SideBarDiv>
             <SideBarDiv className="h-1/4 flex-grow-[.1] p-3">

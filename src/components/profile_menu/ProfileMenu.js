@@ -1,8 +1,20 @@
 import { useEffect, useRef } from "react";
+import styles from './ProfileMenu.module.css';
+import { Link } from "react-router-dom";
+import useClickOutside from "../../hooks/useClickOutside";
+
+
+const ProfileBtn = ({ name, iconName, to, onClick }) => {
+    return (
+        <Link to={to} className={styles['profile-menu-item']} onClick={onClick}>
+            <img src={`/images/icons/${iconName}.svg`} />
+            <span>{name}</span>
+        </Link>
+    )
+}
 
 const ProfileMenu = ({ className, setIsProfileMenu }) => {
     const profileMenuRef = useRef(null);
-
 
     useEffect(() => {
         const handleClickOutside = e => {
@@ -37,17 +49,11 @@ const ProfileMenu = ({ className, setIsProfileMenu }) => {
                 <h1>Kyle Revin</h1>
             </div> */}
             <div className="w-full flex flex-col items-stretch m-3">
-                <button className="w-fit min-w-full hover:bg-baseColor p-3 text-sm flex items-center">
-                    <img className="w-7 h-7 mr-1" src="/images/icons/settings-icon.svg" />
-                    Settings
-                </button>
-                <button className="w-fit  min-w-full hover:bg-baseColor p-3 text-sm flex items-center">
-                    <img className="w-7 h-7 mr-1" src="/images/icons/plus-icon.svg" />Add Account</button>
-                <button className=" w-fit  min-w-full hover:bg-baseColor p-3 text-sm flex items-center">
-                    <img className="w-7 h-7 mr-1" src="/images/icons/signout-icon.svg" />Sign Out</button>
+                <ProfileBtn name="Settings" iconName="settings-icon" to="/settings" onClick={() => setIsProfileMenu(false)} />
+                {/* <ProfileBtn name="Sign Out" iconName="signout-icon"/> */}
             </div>
 
-        </div>
+        </div >
     );
 }
 
