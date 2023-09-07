@@ -50,7 +50,7 @@ const ProfileMenu = ({ className, setIsProfileMenu }) => {
             </div> */}
             <div className="w-full flex flex-col items-stretch m-3">
                 <ProfileBtn name="Settings" iconName="settings-icon" to="/settings" onClick={() => setIsProfileMenu(false)} />
-                {/* <ProfileBtn name="Sign Out" iconName="signout-icon"/> */}
+                {/* <ProfileBtn name="Sign Out" iconName="add-icon"/> */}
             </div>
 
         </div >

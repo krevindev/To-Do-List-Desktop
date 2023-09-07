@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import './App.css';
 import MainContent from './components/main_content/MainContent';
 import SideBar from './components/sidebar/SideBar';
@@ -12,6 +12,10 @@ import SettingsContent from './components/settings_content/SettingsContent';
 function App() {
 
   const { isModalVisible, setIsModalVisible, activeModal } = useContext(GlobalContext);
+
+  useEffect(() => {
+    document.addEventListener('contextmenu', e => e.preventDefault());
+  }, []);
 
   return (
     <Router>

@@ -5,7 +5,7 @@ import { GlobalContext } from "../../hooks/useGlobalContext";
 
 const SettingItem = ({ name }) => {
     return (
-        <li className="w-full h-10  my-2 flex-grow border flex items-center justify-center">{name ? name : "Item"}</li>
+        <li className="w-full h-10  my-2 border flex items-center justify-center">{name ? name : "Item"}</li>
     )
 }
 
@@ -24,7 +24,7 @@ const SettingsContent = () => {
             </header>
             <div className="h-full  flex items-center justify-center">
                 <div className="w-1/2 h-[80%] min-w-[330px]  bg-color2 rounded-lg flex flex-col items-center justify-center">
-                    <ul className="w-full h-full flex flex-col">
+                    <ul className="w-full h-full flex flex-col justify-center">
                         <SettingItem />
                         <SettingItem />
                         <SettingItem />
