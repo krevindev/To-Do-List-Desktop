@@ -74,7 +74,7 @@ function ClearConfirmModal({ setIsConfirmationModal }) {
                 </button>
                 <button className="flex items-center p-5 hover:bg-color2 rounded-lg" onClick={() => setIsConfirmationModal(false)}>
                     <img className="w-5 mx-3" src="/images/icons/cancel-icon.svg" />
-                    <span className="text-xs">No, don't delete the data</span>
+                    <span className="text-xs">Cancel</span>
                 </button>
             </div>
         </div>

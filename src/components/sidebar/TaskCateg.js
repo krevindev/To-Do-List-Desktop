@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import CircularProgress from '../circular_progress/CircularProgress';
 import { deleteDoc, getAllDocs } from "../../db/pouchUtils";
 import { GlobalContext } from "../../hooks/useGlobalContext";
@@ -40,7 +40,7 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                     <div className="flex flex-col justify-center">
                         {/* <h1 className='text-sm'>{name}</h1> */}
                         <input className="w-full bg-[rgba(0,0,0,0)] outline-none placeholder:text-white cursor-pointer" placeholder={name} readOnly></input>
-                        <p className=" text-[10px] text-gray-400 m-1">{tasksLeft} Tasks Left</p>
+                        <p className="  m-y text-[10px] text-gray-500"><b className="text-orange-400 text-[15px] mr-1">{tasksLeft}</b> Tasks {tasksLeft > 0 && "Left"}</p>
                     </div>
                     {
                         !isMenuVisible && <span onClick={() => setIsMenuVisible(true)}>...</span>
@@ -49,17 +49,37 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
             </div>
 
             {
-                isMenuVisible && (
-                    <div className="top-[50%] left-[50%] h-10 my-2 bg-color2 z-20 flex items-center justify-around p-3 cursor-default">
-                        <img title="Mark as Complete" className="h-full cursor-pointer" src="/images/icons/complete-icon.svg" />
-                        <img title="Rename" className="h-full cursor-pointer" src="/images/icons/edit-icon.svg" />
-                        <img title="Delete Category" onClick={() => displayModal('confirm-delete-modal')} className="h-full cursor-pointer hover:saturate-[300%]" src="/images/icons/delete-icon.svg" />
-                    </div>
-                )
+                isMenuVisible && <TaskCategMenu displayModal={displayModal} setIsMenuVisible={setIsMenuVisible} />
             }
         </div>
     )
 };
+
+function TaskCategMenu({ displayModal, setIsMenuVisible }) {
+
+    const TCMRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = e => {
+            if (TCMRef.current && !TCMRef.current.contains(e.target)) {
+                setIsMenuVisible(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    return (
+        <div
+            ref={TCMRef}
+            className="top-[50%] left-[50%] h-10 my-2 bg-color2 z-20 flex items-center justify-around p-3 cursor-default">
+            <img title="Mark as Complete" className="h-full cursor-pointer" src="/images/icons/complete-icon.svg" />
+            <img title="Rename" className="h-full cursor-pointer" src="/images/icons/edit-icon.svg" />
+            <img title="Delete Category" onClick={() => displayModal('confirm-delete-modal')} className="h-full cursor-pointer hover:saturate-[300%]" src="/images/icons/delete-icon.svg" />
+        </div>
+    )
+}
 
 
 export default TaskCateg;

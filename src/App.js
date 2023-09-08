@@ -8,6 +8,7 @@ import ModalContainer from './components/modals/ModalContainer';
 import ConfirmDeleteModal from './components/modals/confirm_delete_modal/ConfirmDeleteModal';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SettingsContent from './components/settings_content/SettingsContent';
+import LoginPage from './components/pages/login_page/LoginPage';
 
 function App() {
 
@@ -20,10 +21,16 @@ function App() {
   return (
     <Router>
       <div id='app' className='h-screen flex items-stretch'>
-        <SideBar />
+
         <Routes>
-          <Route path='/' element={<MainContent />} />
+          <Route path='/' element={
+            <>
+              <SideBar />
+              <MainContent />
+            </>
+          } />
           <Route path='/settings' element={<SettingsContent />} />
+          <Route path='/login' element={<LoginPage />} />
         </Routes>
         {
           isModalVisible && <ModalContainer setIsModalVisible={setIsModalVisible}>
