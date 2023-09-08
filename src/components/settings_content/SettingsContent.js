@@ -47,10 +47,10 @@ const SettingsContent = () => {
 function ClearConfirmModal({ setIsConfirmationModal }) {
 
     const thisRef = useRef(null);
-    const { updateCategs } = useContext(GlobalContext);
+    const { updateDataRender } = useContext(GlobalContext);
 
     const handleDelete = () => {
-        clearData().then(res => setIsConfirmationModal(false)).then(res => updateCategs());
+        clearData().then(res => setIsConfirmationModal(false)).then(res => updateDataRender());
     }
 
     useEffect(() => {

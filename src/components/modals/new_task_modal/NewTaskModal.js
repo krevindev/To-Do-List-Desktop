@@ -28,12 +28,9 @@ const NewTaskModal = ({ setIsNewTaskForm, activeCategoryID, categoryName }) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
-        const title = e.target.elements['task-title'].value;
-        const detail = e.target.elements['task-detail'].value;
-        const due = e.target.elements['task-due'].value;
-
-
-
+        const title = formData.get('task-title');
+        const detail = formData.get('task-detail');
+        const due = formData.get('task-due');
         const newTaskObj = { title: title, detail: detail, due: due };
 
         setIsSaving(true);
@@ -43,9 +40,7 @@ const NewTaskModal = ({ setIsNewTaskForm, activeCategoryID, categoryName }) => {
                     setIsSaving(false);
                     updateDataRender();
                 })
-                .then(res => {
-                    setIsNewTaskForm(false);
-                });
+                .then(res => setIsNewTaskForm(false))
         })
     };
 

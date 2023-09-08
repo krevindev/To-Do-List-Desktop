@@ -3,6 +3,7 @@ import { GlobalContext } from "../../hooks/useGlobalContext";
 import { getDoc, destroyDB, addTask, getAllDocs } from "../../db/pouchUtils";
 import NewTaskModal from "../modals/new_task_modal/NewTaskModal";
 import Task from "./Task";
+import SideBar from "../sidebar/SideBar";
 
 const MainContent = () => {
 
@@ -20,7 +21,12 @@ const MainContent = () => {
     }, [categories]);
 
     return (
-        <div id="main-content" className={`w-full overflow-y-hidden relative ${isDark ? 'bg-color2' : 'bg-white'}`}>
+        <div id="main-content" className={`w-full overflow-y-hidden relative ${isDark ? 'bg-color4' : 'bg-white'}`}>
+            <div
+                className=" sm:hidden bg-baseColor h-11 flex items-center box-border p-3"
+            >
+                <img className="h-[90%]" src="/images/icons/menu-icon.svg" />
+            </div>
             <div className="p-5">{activeCateg && <h1 className="m-auto text-4xl font-semi-bold">{activeCateg.name}</h1>}</div>
             <div className="w-full h-[90%] flex relative">
 
@@ -43,8 +49,10 @@ const MainContent = () => {
                 </div>
             }
             {
-                isNewTaskForm && <NewTaskModal setIsNewTaskForm={setIsNewTaskForm} activeCategoryID={activeCategoryID} categoryName={activeCateg.name}/>
+                isNewTaskForm && <NewTaskModal setIsNewTaskForm={setIsNewTaskForm} activeCategoryID={activeCategoryID} categoryName={activeCateg.name} />
             }
+
+            <SideBar />
         </div>
     );
 }

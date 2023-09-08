@@ -21,17 +21,17 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
         }).catch(err => err);
     }
 
-    const themeProp = isActive ? 'bg-color2 border-opacity-100' : 'bg-baseColor border-opacity-0 border-baseColor';
+    const themeProp = isActive ? 'bg-color3 border-opacity-100 ' : 'bg-baseColor  border-opacity-0 border-baseColor';
 
     return (
         <div
             key={key}
-            className={`TaskCateg h-fit m-1 p-3 flex flex-col justify-stretch hover:bg-color2 box-border cursor-pointer border rounded-md relative ${themeProp}`}
+            className={`TaskCateg h-fit m-1 p-3 flex flex-col justify-stretch hover:bg-color2 box-border cursor-pointer rounded-md relative ${themeProp}`}
             onContextMenu={() => setIsMenuVisible(prev => !prev)}
             onClick={handleClick}
         >
             <div className="w-full flex items-center">
-                <CircularProgress percentage={progress} className="w-5 mr-3" size={7} strokeWidth={2} />
+                <CircularProgress percentage={30} className="w-5 mr-3" size={7} strokeWidth={2} />
                 {/* <img
                     src={`/images/icons/${isToday ? 'today-icon.svg' : 'categ-icon.svg'}`}
                     className="mr-5"

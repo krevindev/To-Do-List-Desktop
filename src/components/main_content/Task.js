@@ -18,14 +18,11 @@ const Task = ({ task }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const toggleOpen = e => {
-        setIsOpened(prev => !prev);
-    }
-
     return (
         <div
-            onClick={toggleOpen}
-            className="task-component flex flex-grow flex-col w-full bg-baseColor m-1 justify-center items-center rounded-md cursor-pointer z-0"
+            onClick={() => setIsOpened(prev => !prev)}
+            onContextMenu={() => setIsOpened(prev => !prev)}
+            className="task-component flex flex-grow flex-col w-full bg-color3 m-1 justify-center items-center rounded-md cursor-pointer z-0"
         >
             <div ref={taskRef} className="flex justify-between w-full p-5 ">
                 <div className="flex items-center">
@@ -40,15 +37,19 @@ const Task = ({ task }) => {
             </div>
             {
                 isOpened && <div
-                    className="bg-black w-full p-2 flex flex-col items-center justify-between z-10 cursor-default" ref={detailRef}
+                    className=" w-full p-2 flex flex-col items-center justify-between z-10 cursor-default" ref={detailRef}
                 >
-                    <p className="w-full py-10 m-2 bg-red-500">
+                    <p className="w-full py-10 px-5 m-2 border">
                         {task.detail ? task.detail : <p className="flex justify-center">No Details</p>}
                     </p>
-                    <div className="w-full flex justify-end p-2">
-                        <button className="w-5">
-                            <img className="w-full hover:saturate-200" src="/images/icons/delete-icon.svg" />
+                    <div className="w-full h-10 flex justify-end p-2">
+                        <button className="w-full flex items-center justify-between bg-blue-800">
+                            <img className="h-full hover:saturate-200" src="/images/icons/delete-icon.svg" />
+                            <img className="h-full hover:saturate-200" src="/images/icons/exit-icon.svg" />
                         </button>
+                    </div>
+                    <div>
+                        <h3 onClick={() => setIsOpened(false)}>Close</h3>
                     </div>
                 </div>
             }
