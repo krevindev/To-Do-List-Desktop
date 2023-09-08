@@ -50,35 +50,37 @@ function ClearConfirmModal({ setIsConfirmationModal }) {
     const { updateDataRender } = useContext(GlobalContext);
 
     const handleDelete = () => {
-        clearData().then(res => setIsConfirmationModal(false)).then(res => updateDataRender());
-    }
+        clearData()
+            .then(res => updateDataRender())
+            .then(res => setIsConfirmationModal(false))
+}
 
-    useEffect(() => {
-        const handleClickOutside = e => {
-            if (thisRef.current && !thisRef.current.contains(e.target)) {
-                setIsConfirmationModal(false);
-            }
+useEffect(() => {
+    const handleClickOutside = e => {
+        if (thisRef.current && !thisRef.current.contains(e.target)) {
+            setIsConfirmationModal(false);
         }
-        document.addEventListener('mousedown', handleClickOutside);
+    }
+    document.addEventListener('mousedown', handleClickOutside);
 
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
 
-    return (
-        <div ref={thisRef} className="bg-baseColor box-border pt-5 rounded-lg flex flex-col items-stretch">
-            <h1 className="text-center">Are you sure you want to clear all data?</h1>
-            <div className=" flex pt-5 p-2">
-                <button className="flex items-center p-5 hover:bg-red-700 rounded-lg" onClick={handleDelete}>
-                    <img className="w-5 mx-3" src="/images/icons/check-icon.svg" />
-                    <span className="text-xs">Yes, I want to clear all data</span>
-                </button>
-                <button className="flex items-center p-5 hover:bg-color2 rounded-lg" onClick={() => setIsConfirmationModal(false)}>
-                    <img className="w-5 mx-3" src="/images/icons/cancel-icon.svg" />
-                    <span className="text-xs">Cancel</span>
-                </button>
-            </div>
+return (
+    <div ref={thisRef} className="bg-baseColor box-border pt-5 rounded-lg flex flex-col items-stretch">
+        <h1 className="text-center">Are you sure you want to clear all data?</h1>
+        <div className=" flex pt-5 p-2">
+            <button className="flex items-center p-5 hover:bg-red-700 rounded-lg" onClick={handleDelete}>
+                <img className="w-5 mx-3" src="/images/icons/check-icon.svg" />
+                <span className="text-xs">Yes, I want to clear all data</span>
+            </button>
+            <button className="flex items-center p-5 hover:bg-color2 rounded-lg" onClick={() => setIsConfirmationModal(false)}>
+                <img className="w-5 mx-3" src="/images/icons/cancel-icon.svg" />
+                <span className="text-xs">Cancel</span>
+            </button>
         </div>
-    )
+    </div>
+)
 }
 
 export default SettingsContent;

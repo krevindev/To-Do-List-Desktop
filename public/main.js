@@ -6,6 +6,7 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        icon: __dirname + '/images/icons/arrow-icon.svg',
         webPreferences: {
             enableRemoteModule: true
         }

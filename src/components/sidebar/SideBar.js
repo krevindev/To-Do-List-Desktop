@@ -17,7 +17,7 @@ const SideBarDiv = ({ children, className }) => {
     )
 }
 
-const SideBar = () => {
+const SideBar = ({isMobileVisible}) => {
 
     const {
         isDark,
@@ -32,7 +32,7 @@ const SideBar = () => {
 
     return (
         <aside
-            className={`hidden sm:flex flex-col w-60 max-w-[60] max-h-screen items-stretch justify-stretch ${isDark ? 'bg-baseColor' : 'bg-slate-300'} box-border`}
+            className={`${isMobileVisible ? 'flex' : 'hidden'} sm:flex flex-col w-60 max-w-[60] max-h-screen items-stretch justify-stretch ${isDark ? 'bg-baseColor' : 'bg-slate-300'} box-border h-full `}
         >
 
             <SideBarDiv className="flex-grow-0 flex items-center justify-between p-6 select-none">

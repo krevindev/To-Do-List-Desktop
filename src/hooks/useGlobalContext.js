@@ -45,6 +45,8 @@ export const GlobalContextProvider = ({ children }) => {
     }, []);
 
     const updateDataRender = () => {
+        setOpenedTasks([]);
+        setCategories([]);
         updateCategs();
         getDoc(activeCategoryID)
             .then(doc => {

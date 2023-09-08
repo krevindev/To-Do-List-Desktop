@@ -51,8 +51,6 @@ const MainContent = () => {
             {
                 isNewTaskForm && <NewTaskModal setIsNewTaskForm={setIsNewTaskForm} activeCategoryID={activeCategoryID} categoryName={activeCateg.name} />
             }
-
-            <SideBar />
         </div>
     );
 }
