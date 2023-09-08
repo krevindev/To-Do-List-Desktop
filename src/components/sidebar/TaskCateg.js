@@ -40,7 +40,7 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                     <div className="flex flex-col justify-center">
                         {/* <h1 className='text-sm'>{name}</h1> */}
                         <input className="w-full bg-[rgba(0,0,0,0)] outline-none placeholder:text-white cursor-pointer" placeholder={name} readOnly></input>
-                        <p className="  m-y text-[10px] text-gray-500"><b className="text-orange-400 text-[15px] mr-1">{tasksLeft}</b> Tasks {tasksLeft > 0 && "Left"}</p>
+                        <p className="  m-y text-[10px] text-gray-500"><b className="text-orange-400 font-semibold text-[15px] mr-1">{tasksLeft}</b> Tasks {tasksLeft > 0 && "Left"}</p>
                     </div>
                     {
                         !isMenuVisible && <span onClick={() => setIsMenuVisible(true)}>...</span>
@@ -49,20 +49,26 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
             </div>
 
             {
-                isMenuVisible && <TaskCategMenu displayModal={displayModal} setIsMenuVisible={setIsMenuVisible} />
+                isMenuVisible && <TaskCategMenu
+                    displayModal={displayModal}
+                    setIsMenuVisible={setIsMenuVisible}
+                    isMenuVisible={isMenuVisible}
+                    />
             }
         </div>
     )
 };
 
-function TaskCategMenu({ displayModal, setIsMenuVisible }) {
+function TaskCategMenu({ displayModal, setIsMenuVisible, isMenuVisible }) {
 
     const TCMRef = useRef(null);
 
     useEffect(() => {
         const handleClickOutside = e => {
             if (TCMRef.current && !TCMRef.current.contains(e.target)) {
-                setIsMenuVisible(false);
+                if(!isMenuVisible){
+                    setIsMenuVisible(false);
+                }
             }
         }
         document.addEventListener('mousedown', handleClickOutside);

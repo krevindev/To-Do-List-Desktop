@@ -11,16 +11,17 @@ export const GlobalContextProvider = ({ children }) => {
     const [activeCategoryID, setActiveCategoryID] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false); // NLM = New List Modal
     const [activeModal, setActiveModal] = useState('');
+    const [openedTasks, setOpenedTasks] = useState([]);
 
     const toggleDark = () => {
         setIsDark(prev => !prev);
     };
 
     const updateCategs = () => {
-        getAllDocs().then(res => {
-            console.log(res);
-            setCategories(res.sort((a, b) => moment(a.dateTimeCreated) - moment(b.dateTimeCreated)));
-        });
+        getAllDocs()
+            .then(res => {
+                setCategories(res.sort((a, b) => moment(a.dateTimeCreated) - moment(b.dateTimeCreated)));
+            });
     };
 
     const displayModal = (modalType) => {
@@ -29,8 +30,28 @@ export const GlobalContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        if (activeCategoryID) {
+            getDoc(activeCategoryID)
+                .then(doc => {
+                    setOpenedTasks(doc.tasks);
+                }).catch(err => console.log(err));
+        } else {
+            setOpenedTasks([]);
+        }
+    }, [activeCategoryID]);
+
+    useEffect(() => {
         updateCategs();
     }, []);
+
+    const updateDataRender = () => {
+        updateCategs();
+        getDoc(activeCategoryID)
+            .then(doc => {
+                setOpenedTasks(doc.tasks);
+            })
+            .catch(err => console.log())
+    };
 
     return (
         <GlobalContext.Provider value={
@@ -40,12 +61,15 @@ export const GlobalContextProvider = ({ children }) => {
                 activeCategoryID,
                 isModalVisible,
                 activeModal,
+                openedTasks,
                 toggleDark,
                 setActiveCategoryID,
                 setIsModalVisible,
                 updateCategs,
                 setActiveModal,
-                displayModal
+                displayModal,
+                setOpenedTasks,
+                updateDataRender
             }}>
             {children}
         </GlobalContext.Provider>

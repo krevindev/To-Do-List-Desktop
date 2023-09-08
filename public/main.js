@@ -1,5 +1,4 @@
 const { BrowserWindow, app, Menu } = require('electron');
-
 require('@electron/remote/main').initialize();
 
 function createWindow() {
@@ -7,7 +6,7 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
-        webPreferences: {   
+        webPreferences: {
             enableRemoteModule: true
         }
     });
@@ -19,7 +18,7 @@ function createWindow() {
 
 app.on('ready', createWindow);
 
-// Quite when windows are closed
+// Quit when windows are closed
 app.on('window-all-closed', () => {
     // On OS X it is common for their application and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q

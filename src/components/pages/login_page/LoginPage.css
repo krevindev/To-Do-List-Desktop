@@ -1,0 +1,3 @@
+.login-input {
+    @apply rounded-sm my-[1px] h-[40px] outline-none box-border p-3 font-bold
+}
