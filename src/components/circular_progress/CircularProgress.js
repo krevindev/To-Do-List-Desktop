@@ -17,7 +17,7 @@ const CircularProgress = ({ percentage, className, size, strokeWidth }) => {
         strokeDasharray={`${circumference} ${circumference}`}
       />
       <circle
-        className="circular-progress-circle stroke-orange-600"
+        className="circular-progress-circle stroke-white"
         r={size}
         cx="50%"
         cy="50%"

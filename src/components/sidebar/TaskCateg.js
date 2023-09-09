@@ -31,7 +31,8 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
             onClick={handleClick}
         >
             <div className="w-full flex items-center">
-                <CircularProgress percentage={30} className="w-5 mr-3" size={7} strokeWidth={2} />
+                {/* <CircularProgress percentage={isActive?100:0} className="w-5 mr-3" size={5} strokeWidth={2} /> */}
+                <div className={`${isActive ? 'w-3 bg-orange-500' : 'w-[1px]'} transition-all h-16 mr-3`}></div>
                 {/* <img
                     src={`/images/icons/${isToday ? 'today-icon.svg' : 'categ-icon.svg'}`}
                     className="mr-5"
@@ -40,7 +41,11 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                     <div className="flex flex-col justify-center">
                         {/* <h1 className='text-sm'>{name}</h1> */}
                         <input className="w-full bg-[rgba(0,0,0,0)] outline-none placeholder:text-white cursor-pointer" placeholder={name} readOnly></input>
-                        <p className="  m-y text-[10px] text-gray-500"><b className="text-orange-400 font-semibold text-[15px] mr-1">{tasksLeft}</b> Tasks {tasksLeft > 0 && "Left"}</p>
+                        <p className="  m-y text-[10px] text-gray-400">
+                            <b className="text-orange-400 font-semibold text-[15px] mr-1">
+                                {tasksLeft}
+                            </b> {tasksLeft > 1 ? "Tasks" : "Task"} {tasksLeft > 0 && "Left"}
+                        </p>
                     </div>
                     {
                         !isMenuVisible && <span onClick={() => setIsMenuVisible(true)}>...</span>
@@ -53,7 +58,7 @@ const TaskCateg = ({ id, key, tasksLeft, name, isActive, setActiveCategoryID, pr
                     displayModal={displayModal}
                     setIsMenuVisible={setIsMenuVisible}
                     isMenuVisible={isMenuVisible}
-                    />
+                />
             }
         </div>
     )
@@ -66,7 +71,7 @@ function TaskCategMenu({ displayModal, setIsMenuVisible, isMenuVisible }) {
     useEffect(() => {
         const handleClickOutside = e => {
             if (TCMRef.current && !TCMRef.current.contains(e.target)) {
-                if(!isMenuVisible){
+                if (!isMenuVisible) {
                     setIsMenuVisible(false);
                 }
             }
